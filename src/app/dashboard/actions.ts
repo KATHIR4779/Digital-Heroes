@@ -13,7 +13,7 @@ export async function submitScore(formData: FormData) {
   const date = formData.get('date') as string
 
   if (score < 1 || score > 45) {
-    return { error: "Score must be between 1 and 45" }
+    throw new Error("Score must be between 1 and 45")
   }
 
   const { error } = await supabase
@@ -26,11 +26,10 @@ export async function submitScore(formData: FormData) {
 
   if (error) {
     console.error("Error submitting score:", error)
-    return { error: "Failed to submit score. Duplicate date?" }
+    throw new Error("Failed to submit score. Duplicate date?")
   }
 
   revalidatePath('/dashboard')
-  return { success: true }
 }
 
 export async function deleteScore(scoreId: string) {
@@ -46,11 +45,10 @@ export async function deleteScore(scoreId: string) {
     .eq('user_id', user.id)
 
   if (error) {
-    return { error: "Failed to delete score" }
+    throw new Error("Failed to delete score")
   }
 
   revalidatePath('/dashboard')
-  return { success: true }
 }
 
 export async function updateCharitySettings(formData: FormData) {
@@ -63,7 +61,7 @@ export async function updateCharitySettings(formData: FormData) {
   const percentage = parseInt(formData.get('percentage') as string)
 
   if (percentage < 10 || percentage > 100) {
-    return { error: "Percentage must be between 10 and 100" }
+    throw new Error("Percentage must be between 10 and 100")
   }
 
   const { error } = await supabase
@@ -75,9 +73,8 @@ export async function updateCharitySettings(formData: FormData) {
     .eq('id', user.id)
 
   if (error) {
-    return { error: "Failed to update charity settings" }
+    throw new Error("Failed to update charity settings")
   }
 
   revalidatePath('/dashboard')
-  return { success: true }
 }

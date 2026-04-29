@@ -36,7 +36,7 @@ export default async function AdminDashboard() {
             </div>
             
             {draw.status === 'simulated' && (
-              <form action={async () => { 'use server'; await publishDraw(draw.id); }}>
+              <form action={async (formData: FormData) => { 'use server'; await publishDraw(draw.id); }}>
                 <button type="submit" className="btn btn-secondary">Publish to Users</button>
               </form>
             )}

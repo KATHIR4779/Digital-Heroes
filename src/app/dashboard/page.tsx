@@ -85,7 +85,7 @@ export default async function DashboardPage() {
                         <div style={{ fontWeight: 600, fontSize: '1.25rem' }}>{s.score} pts</div>
                         <div style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>{s.played_date}</div>
                       </div>
-                      <form action={async () => { 'use server'; await deleteScore(s.id); }}>
+                      <form action={async (formData: FormData) => { 'use server'; await deleteScore(s.id); }}>
                         <button type="submit" className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>Remove</button>
                       </form>
                     </li>

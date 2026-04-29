@@ -3,7 +3,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 
-export async function simulateDraw() {
+export async function simulateDraw(formData: FormData) {
   const supabase = await createClient()
   
   // 1. Generate 5 random numbers between 1 and 45
@@ -34,7 +34,6 @@ export async function simulateDraw() {
   // For simplicity in this demo, we just create the draw.
   
   revalidatePath('/admin')
-  return { success: true, drawId: draw.id }
 }
 
 export async function publishDraw(drawId: string) {
