@@ -43,16 +43,21 @@ export default async function DashboardPage() {
             <h1 style={{ fontSize: '2.5rem' }}>Welcome, {profile?.full_name || 'Golfer'}</h1>
             <p style={{ color: 'var(--color-text-secondary)' }}>Manage your scores and track your impact.</p>
           </div>
-          <div className="glass-panel" style={{ padding: '1rem 2rem', border: `1px solid ${isActive ? 'var(--color-primary-base)' : 'var(--color-error)'}` }}>
-            <div style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>Subscription Status</div>
-            <div style={{ fontWeight: 700, color: isActive ? 'var(--color-primary-base)' : 'var(--color-error)' }}>
-              {isActive ? 'ACTIVE' : 'INACTIVE'}
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <div className="glass-panel" style={{ padding: '1rem 2rem', border: `1px solid ${isActive ? 'var(--color-primary-base)' : 'var(--color-error)'}` }}>
+              <div style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>Subscription Status</div>
+              <div style={{ fontWeight: 700, color: isActive ? 'var(--color-primary-base)' : 'var(--color-error)' }}>
+                {isActive ? 'ACTIVE' : 'INACTIVE'}
+              </div>
+              {!isActive && (
+                <Link href="/pricing" style={{ fontSize: '0.875rem', textDecoration: 'underline', marginTop: '0.5rem', display: 'block' }}>
+                  Renew Now
+                </Link>
+              )}
             </div>
-            {!isActive && (
-              <Link href="/pricing" style={{ fontSize: '0.875rem', textDecoration: 'underline', marginTop: '0.5rem', display: 'block' }}>
-                Renew Now
-              </Link>
-            )}
+            <form action={async () => { 'use server'; const { signout } = await import('@/app/login/actions'); await signout(); }}>
+              <button type="submit" className="btn btn-secondary">Sign Out</button>
+            </form>
           </div>
         </header>
 
